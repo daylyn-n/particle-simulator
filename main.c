@@ -7,6 +7,9 @@
 #define WIDTH 900
 #define HEIGHT 600
 #define MAX_PARTICLE 1000
+#define GRAVITY 9.8
+#define FRICTION 0.1
+
 enum RUNNING
 {
     IS_RUNNING, NOT_RUNNING
@@ -14,10 +17,14 @@ enum RUNNING
 int gRunning = IS_RUNNING ;
 typedef struct
 {
-   float x,y,r,vx,vy;
+   float x, y, r, vx, vy, mass;
 
 }Particle;
 
+
+// x^2 + y^2 = r^2
+// dx = +- sqrt(r*2 - y^2)
+// get the x points of the circle to draw a line connectng the left point and right point
 void drawFilledCircle(SDL_Renderer* renderer, int cx, int cy, int radius)
 {
     // Simple bounding check (optional)
@@ -35,16 +42,32 @@ void DrawParticle(SDL_Renderer *renderer, Particle *particle)
 {
     drawFilledCircle(renderer, particle->x, particle->y, particle->r);
 }
-void UpdateParticle(Particle *particle)
+void UpdateParticle(Particle *particle, float deltaTime)
 {
-    particle->x += particle->vx;
-    particle->y += particle->vy;
+    particle->x += particle->vx * deltaTime;
+    particle->y += particle->vy * deltaTime;
 
     float x = particle->x;
     float y = particle->y;
     float radius = particle->r;
-    // collision handling
     
+    // simulate gravity 
+    // sdl uses the top left corner as its origin
+    // so we add gravity to make it go down
+    particle->vy +=  GRAVITY * deltaTime;
+    
+    
+    // apply friction
+   if(particle->y == 0)
+   {
+        particle->vx -= FRICTION * particle->vx * deltaTime;
+        if(fabs(particle->vx) < 1)
+        {
+            particle->vx = 0;
+        }
+   }
+
+    // collision handling
     if(x - radius < 0) // left wall
     {
         particle->x = radius;
@@ -55,30 +78,26 @@ void UpdateParticle(Particle *particle)
         particle->x = WIDTH - radius;
         particle->vx = -particle->vx;
     }
-    if(y - radius < 0) // bottom bound
+    if(y - radius < 0) // top bound
     {
         particle->y = radius;
         particle->vy = -particle->vy;
     }
-    if(y + radius >  HEIGHT) // top bound
+    if(y + radius >  HEIGHT) // bottom bound
     {
+        // bounce height based on mass
         particle->y = HEIGHT - radius;
-        particle->vy = -particle->vy;
+        particle->vy = -particle->vy/ 2;
     }
-}
-void Initialize()
-{
-    Particle particle = {300, 300, 50,-7, 7};
 
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window* window = SDL_CreateWindow("Particle Simulator", SDL_WINDOWPOS_CENTERED,
-            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
-    
-    
+}
+
+
+void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle particle[], float deltaTime)
+{
     const int FRAME_DELAY = 1000 / 60; 
     SDL_Event e;
 
-    SDL_Renderer  *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); 
     while(!gRunning)
     {
         Uint32 frameStart = SDL_GetTicks(); // gets the number of milisecdons since sdl initialuzed
@@ -90,17 +109,19 @@ void Initialize()
                 gRunning = NOT_RUNNING;
             }
         }
-    
 
         // clear screen
-
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
         
         // draw scene   
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        UpdateParticle(&particle);
-        DrawParticle(renderer, &particle);
+        for(int i = 0; i < 2; i++)
+        {
+            UpdateParticle(&particle[i], deltaTime);
+            DrawParticle(renderer, &particle[i]);
+       
+        }
         
         // updating the screen after any renders have been made
         SDL_RenderPresent(renderer);
@@ -112,23 +133,33 @@ void Initialize()
         SDL_Delay(FRAME_DELAY - frameTime);
     }
 
+
+}
+
+void CleanUp(SDL_Window* window, SDL_Renderer *renderer)
+{
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    
 }
-
-
-
-
-
 
 int main()
 {
 
-    Initialize();
+   Particle particle[2] = 
+   {
+        {300, 300, 50, 7, 0},
+        {200, 150, 20, 9, 0}
+   };
+    float deltaTime = 0.1;
+    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Window* window = SDL_CreateWindow("Particle Simulator", SDL_WINDOWPOS_CENTERED,
+            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
+    
+    SDL_Renderer  *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); 
+    MainLoop(window,renderer, particle, deltaTime);
 
-   // MainLoop();
+    CleanUp(window, renderer);
 
     
 
