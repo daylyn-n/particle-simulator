@@ -6,10 +6,12 @@
 
 #define WIDTH 900
 #define HEIGHT 600
-#define MAX_PARTICLE 100 
+#define MAX_PARTICLE 70 
 #define GRAVITY 9.8
 #define FRICTION 0.1
 
+// how elsatic our particles are
+#define gCOR 0.8
 enum RUNNING
 {
     IS_RUNNING, NOT_RUNNING
@@ -31,10 +33,6 @@ int randHelp(int lb, int ub)
 // get the x points of the circle to draw a line connectng the left point and right point
 void drawFilledCircle(SDL_Renderer* renderer, int cx, int cy, int radius)
 {
-    // Simple bounding check (optional)
-    if (radius <= 0) return;
-
-      
     for (int y = -radius; y <= radius; y++) {
         int dx = (int)floor(sqrt((double)(radius * radius - y * y)));
         SDL_RenderDrawLine(renderer,
@@ -91,8 +89,12 @@ void UpdateParticle(Particle *particle, float deltaTime)
     if(y + radius >  HEIGHT) // bottom bound
     {
         // bounce height based on mass
+        
         particle->y = HEIGHT - radius;
-        particle->vy = -particle->vy;
+        if(particle->vy > 0)
+        {
+            particle->vy = -particle->vy * gCOR;
+        }
     }
     
    
@@ -102,11 +104,13 @@ void UpdateParticle(Particle *particle, float deltaTime)
 // distance between centers is <= radii
 // sqrt(distX^2 + distY^2) <= radii 
 // distX^2 + distY^2 <= radii^2
-bool ParticlesCollide(Particle *p1, Particle *p2)
+bool ParticlesCollide(SDL_Renderer *renderer, Particle *p1, Particle *p2)
 {
     float distX = p1->x - p2->x;
     float distY = p1->y - p2->y;
     float r     = p1->r + p2->r;
+
+    //SDL_SetRenderDrawColor(renderer, randHelp(0,255), randHelp(0,255), randHelp(0,255), 255);
     return (distX*distX + distY*distY) <= (r * r);
 }
 void ResolveCollision(Particle *p1, Particle* p2)
@@ -136,8 +140,6 @@ void ResolveCollision(Particle *p1, Particle* p2)
      if(velAlongNormal > 0) // double bounce check
         return;
 
-     // COR, COEFFIENCE OF RESTITUION, actual bouncing time
-     float e = 0.9f; // how elsatic our particles are
         
      // impulse
      float massOne = 1.0f / p1->mass;
@@ -145,13 +147,18 @@ void ResolveCollision(Particle *p1, Particle* p2)
 
      // Newtons third law :laugh: 
      // every action, there is an equal and opposite reaction
-     float j = -(1 + e) * velAlongNormal;
+     float j = -(1 + gCOR) * velAlongNormal;
      j /= (massOne + massTwo);
 
      // impulse along the normal direction!!!!
      float impulseX = j * nx;
      float impulseY = j * ny;
-
+    
+     // deltaV = j / mass
+     // our normal is the direction from
+     // p2 -> p1
+     // so p1 gets pushed forward along the Normal 
+     // and p2 gets pushed away
      p1->vx += impulseX * massOne;
      p1->vy += impulseY * massOne;
      p2->vx -= impulseX * massTwo;
@@ -171,13 +178,13 @@ void ResolveCollision(Particle *p1, Particle* p2)
     }
 }
 
-void CollideAllParticle(Particle *particle)
+void CollideAllParticle(SDL_Renderer* renderer, Particle *particle)
 {
     for(int i = 0; i < MAX_PARTICLE; i++)
     {
         for(int j = i + 1; j < MAX_PARTICLE; j++)
         {
-            if(ParticlesCollide(&particle[i], &particle[j]))
+            if(ParticlesCollide(renderer, &particle[i], &particle[j]))
             {
                 ResolveCollision(&particle[i], &particle[j]);
             }
@@ -212,8 +219,7 @@ void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle particle[], f
             UpdateParticle(&particle[i], deltaTime); // collides with walls
         }
 
-        CollideAllParticle(particle); // collides with other particles
-
+        CollideAllParticle(renderer, particle); // collides with other particles
         for(int i = 0; i < MAX_PARTICLE; i++)
         {
             DrawParticle(renderer, &particle[i]);
@@ -221,7 +227,7 @@ void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle particle[], f
         
         // updating the screen after any renders have been made
         SDL_RenderPresent(renderer);
-
+    
         // cap frames
         Uint32 frameTime = SDL_GetTicks() - frameStart;
 
@@ -246,12 +252,12 @@ int main()
     srand(time(NULL));
     for(int i = 0; i < MAX_PARTICLE; i++)
     {
-        particle[i].x = randHelp(100,300);
-        particle[i].y = randHelp(100,300);
-        particle[i].vx = randHelp(0,10);
-        particle[i].vy = randHelp(0,10);
-        particle[i].r = randHelp(50,70);
-        particle[i].mass = 200;
+        particle[i].x       = randHelp(100,300);
+        particle[i].y       = randHelp(100,300);
+        particle[i].vx      = randHelp(0,10);
+        particle[i].vy      = randHelp(0,10);
+        particle[i].r       = randHelp(50,70);
+        particle[i].mass    = 200;
     }
     float deltaTime = 0.1;
     SDL_Init(SDL_INIT_VIDEO);
@@ -259,6 +265,8 @@ int main()
             SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
     
     SDL_Renderer  *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); 
+    
+    //SDL_SetRenderDrawColor(renderer, randHelp(0,255), randHelp(0,255), randHelp(0,255), 255);
     MainLoop(window,renderer, particle, deltaTime);
 
     CleanUp(window, renderer);    
