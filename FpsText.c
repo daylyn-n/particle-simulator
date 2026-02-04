@@ -4,7 +4,7 @@ void FpsTextInit(FpsText *ft, SDL_Renderer *renderer)
 {
     ft->font =  TTF_OpenFont("BitcountSingle-Regular.ttf", 24);
     ft->color = (SDL_Color){40, 255, 40};
-    ft->textBox = (SDL_Rect){900, 700, 0, 0};
+    ft->textBox =(SDL_Rect){10, 10, 0, 0};
     ft->tex = NULL;
     ft->lastFpsVal = (Uint32)-1;
     

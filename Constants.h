@@ -3,12 +3,12 @@
  
 #define WIDTH 1000
 #define HEIGHT 800
-#define MAX_PARTICLE 30000
+#define MAX_PARTICLE 500
 #define GRAVITY 9.8
 #define FRICTION 0.1
 
 // how elsatic our particles are
-#define gCOR 0.9
+#define gCOR 0.97
 enum RUNNING
 {
     IS_RUNNING, NOT_RUNNING
