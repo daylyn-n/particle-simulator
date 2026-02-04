@@ -6,7 +6,7 @@
 
 #define WIDTH 900
 #define HEIGHT 600
-#define MAX_PARTICLE 5
+#define MAX_PARTICLE 100 
 #define GRAVITY 9.8
 #define FRICTION 0.1
 
@@ -25,6 +25,7 @@ int randHelp(int lb, int ub)
     return (rand() % (ub - lb + 1)) + 1;
 
 }
+
 // x^2 + y^2 = r^2
 // dx = +- sqrt(r*2 - y^2)
 // get the x points of the circle to draw a line connectng the left point and right point
@@ -91,11 +92,12 @@ void UpdateParticle(Particle *particle, float deltaTime)
     {
         // bounce height based on mass
         particle->y = HEIGHT - radius;
-        particle->vy = -particle->vy/ 2;
+        particle->vy = -particle->vy;
     }
     
    
 }
+
 // two particles collide if the 
 // distance between centers is <= radii
 // sqrt(distX^2 + distY^2) <= radii 
@@ -109,11 +111,12 @@ bool ParticlesCollide(Particle *p1, Particle *p2)
 }
 void ResolveCollision(Particle *p1, Particle* p2)
 {
-     float distX = p1->x - p2->x;
-     float distY = p1->y - p2->y;
+    float distX = p1->x - p2->x;
+    float distY = p1->y - p2->y;
 
-     float distCenter = distX*distX + distY*distY;
-    if (distCenter == 0.0f) {
+    float distCenter = distX*distX + distY*distY;
+    if (distCenter == 0.0f)
+    {
         return;
     }
     float radDist = sqrtf(distCenter);
@@ -134,7 +137,7 @@ void ResolveCollision(Particle *p1, Particle* p2)
         return;
 
      // COR, COEFFIENCE OF RESTITUION, actual bouncing time
-     float e = 0.5f; // how elsatic our particles are
+     float e = 0.9f; // how elsatic our particles are
         
      // impulse
      float massOne = 1.0f / p1->mass;
@@ -149,21 +152,22 @@ void ResolveCollision(Particle *p1, Particle* p2)
      float impulseX = j * nx;
      float impulseY = j * ny;
 
-     p1->vx -= impulseX * massOne;
-     p1->vy -= impulseY * massOne;
-     p2->vx += impulseX * massTwo;
-     p2->vy += impulseY * massTwo;
+     p1->vx += impulseX * massOne;
+     p1->vy += impulseY * massOne;
+     p2->vx -= impulseX * massTwo;
+     p2->vy -= impulseY * massTwo;
     
-     // position corrections
-     float overlap = (p1->r + p2->r) - radDist;
-    if (overlap > 0) {
+    // position corrections
+    float overlap = (p1->r + p2->r) - radDist;
+    if (overlap > 0)
+    {
         float percent = 0.8f; // stabilization
         float correction = overlap * percent / (massOne + massTwo);
 
-        p1->x -= correction * massOne * nx;
-        p1->y -= correction * massOne * ny;
-        p2->x += correction * massTwo * nx;
-        p2->y += correction * massTwo * ny;
+        p1->x += correction * massOne * nx;
+        p1->y += correction * massOne * ny;
+        p2->x -= correction * massTwo * nx;
+        p2->y -= correction * massTwo * ny;
     }
 }
 
@@ -201,8 +205,7 @@ void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle particle[], f
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
         
-        // draw scene   
-        
+        // draw scene
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         for(int i = 0; i < MAX_PARTICLE; i++)
         {
@@ -258,9 +261,5 @@ int main()
     SDL_Renderer  *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); 
     MainLoop(window,renderer, particle, deltaTime);
 
-    CleanUp(window, renderer);
-
-    
-
-    
+    CleanUp(window, renderer);    
 }
