@@ -6,12 +6,12 @@
 
 #define WIDTH 900
 #define HEIGHT 600
-#define MAX_PARTICLE 70 
+#define MAX_PARTICLE 2 
 #define GRAVITY 9.8
 #define FRICTION 0.1
 
 // how elsatic our particles are
-#define gCOR 0.8
+#define gCOR 0.9 
 enum RUNNING
 {
     IS_RUNNING, NOT_RUNNING
@@ -19,7 +19,8 @@ enum RUNNING
 int gRunning = IS_RUNNING ;
 typedef struct
 {
-   float x, y, r, vx, vy, mass;
+    float x, y, r, vx, vy, mass;
+    SDL_Color color;
 
 }Particle;
 int randHelp(int lb, int ub)
@@ -76,7 +77,7 @@ void UpdateParticle(Particle *particle, float deltaTime)
         particle->x = radius;
         particle->vx = -particle->vx;
     }
-    if(x +  radius > WIDTH) // right wall
+    if(x + radius > WIDTH) // right wall
     {
         particle->x = WIDTH - radius;
         particle->vx = -particle->vx;
@@ -96,8 +97,6 @@ void UpdateParticle(Particle *particle, float deltaTime)
             particle->vy = -particle->vy * gCOR;
         }
     }
-    
-   
 }
 
 // two particles collide if the 
@@ -178,6 +177,12 @@ void ResolveCollision(Particle *p1, Particle* p2)
     }
 }
 
+void DrawParticleColor(Particle *p1, Particle* p2)
+{
+    p1->color = (SDL_Color){255, 80, 80, 255};
+    p2->color = (SDL_Color){255, 80, 80, 255};
+
+}
 void CollideAllParticle(SDL_Renderer* renderer, Particle *particle)
 {
     for(int i = 0; i < MAX_PARTICLE; i++)
@@ -187,6 +192,12 @@ void CollideAllParticle(SDL_Renderer* renderer, Particle *particle)
             if(ParticlesCollide(renderer, &particle[i], &particle[j]))
             {
                 ResolveCollision(&particle[i], &particle[j]);
+                DrawParticleColor(&particle[i], &particle[j]);
+                SDL_SetRenderDrawColor(renderer,
+                                    particle[i].color.r,
+                                    particle[i].color.g,
+                                    particle[i].color.b,
+                                    255);
             }
         }
     }
@@ -252,12 +263,13 @@ int main()
     srand(time(NULL));
     for(int i = 0; i < MAX_PARTICLE; i++)
     {
-        particle[i].x       = randHelp(100,300);
-        particle[i].y       = randHelp(100,300);
-        particle[i].vx      = randHelp(0,10);
-        particle[i].vy      = randHelp(0,10);
-        particle[i].r       = randHelp(50,70);
-        particle[i].mass    = 200;
+        particle[i].x       = randHelp(10,890);
+        particle[i].y       = randHelp(10,590);
+        particle[i].vx      = randHelp(-20,20);
+        particle[i].vy      = randHelp(-20,20);
+        particle[i].r       = 10;
+        particle[i].mass    = 80;
+        particle[i].color   = (SDL_Color){255, 255, 255, 255}; // white
     }
     float deltaTime = 0.1;
     SDL_Init(SDL_INIT_VIDEO);
