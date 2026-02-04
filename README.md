@@ -1,5 +1,10 @@
-# using this to get out of C++ encapsulation hell
+# Particle Simulator using C and SDL2
 
+## Why
+Just wanted to get out of C++ object oriented style of programming and try a more procedural style.
+I've also been learning openGL on the side of classes and the guide uses SDL2 as its window generator, so I thought this project would
+be a good opportunity to learn it
+ 
 ## demo and fps check
 
 https://github.com/user-attachments/assets/b0d30bf6-c61e-4518-9005-b5edf6298171
