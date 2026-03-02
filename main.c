@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "Collision.h"
 #include "Constants.h"
 #include "FpsText.h"
@@ -10,7 +11,7 @@ int randHelp(int lb, int ub)
     return (rand() % (ub - lb + 1)) + 1;
 }
 
-void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle particle[], float deltaTime, FpsText ft)
+void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle *particle[], float deltaTime, FpsText ft)
 {
     const int FRAME_DELAY = 1000 / 60; 
     SDL_Event e;
@@ -42,13 +43,13 @@ void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle particle[], f
         DrawFpsText(&ft, renderer, fps);
         for(int i = 0; i < MAX_PARTICLE; i++)
         {
-            UpdateParticle(&particle[i], deltaTime);
+            UpdateParticle(particle[i], deltaTime);
         }
 
         CollideAllParticle(renderer, particle);
         for(int i = 0; i < MAX_PARTICLE; i++)
         {
-            DrawParticle(renderer, &particle[i]);
+            DrawParticle(renderer, particle[i]);
         }
 
         SDL_RenderPresent(renderer);
@@ -81,18 +82,34 @@ void CleanUp(SDL_Window* window, SDL_Renderer *renderer)
 
 int main()
 {
-    Particle particle[MAX_PARTICLE];
+    Particle *particle[MAX_PARTICLE];
     srand(time(NULL));
     for(int i = 0; i < MAX_PARTICLE; i++)
     {
-        particle[i].x       = randHelp(10,890);
-        particle[i].y       = randHelp(10,590);
-        particle[i].vx      = randHelp(-20,20);
-        particle[i].vy      = randHelp(-20,20);
-        particle[i].r       = 10;
-        particle[i].mass    = 80;
-        particle[i].baseColor   = (SDL_Color){255, 255, 255, 255}; // white
-        particle[i].colorTime = 2.0f;
+        // Allocate memory for the Particle struct
+        particle[i] = malloc(sizeof(Particle));
+        
+        // Allocate memory for each pointer member
+        particle[i]->x           = malloc(sizeof(float));
+        particle[i]->y           = malloc(sizeof(float));
+        particle[i]->vx          = malloc(sizeof(float));
+        particle[i]->vy          = malloc(sizeof(float));
+        particle[i]->r           = malloc(sizeof(float));
+        particle[i]->mass        = malloc(sizeof(float));
+        particle[i]->color       = malloc(sizeof(SDL_Color));
+        particle[i]->baseColor   = malloc(sizeof(SDL_Color));
+        particle[i]->collideColor = malloc(sizeof(SDL_Color));
+        particle[i]->colorTime   = malloc(sizeof(float));
+        
+        // Now assign values
+        *particle[i]->x           = randHelp(10,890);
+        *particle[i]->y           = randHelp(10,590);
+        *particle[i]->vx          = randHelp(-20,20);
+        *particle[i]->vy          = randHelp(-20,20);
+        *particle[i]->r           = 10;
+        *particle[i]->mass        = 80;
+        *particle[i]->baseColor   = (SDL_Color){255, 255, 255, 255}; // white
+        *particle[i]->colorTime   = 2.0f;
     }
     float deltaTime = 0.1;
 
