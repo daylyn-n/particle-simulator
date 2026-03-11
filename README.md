@@ -18,15 +18,14 @@ https://github.com/user-attachments/assets/b0d30bf6-c61e-4518-9005-b5edf6298171
 
 ### Building
 ```bash
-gcc main.c Constants.h Collision.c FpsText.c -lSDL2 -lm -lSDL2_ttf
+gcc main.c Constants.h Collision.c FpsText.c -lSDL2 -lm -lSDL2_ttf -o output
 
 ```
 
 ### Run
 ```bash
-./a.out
+./output
 ```
-or just make an output file when you compile it
 
 ## What to except
 For now this is just a playground project using SDL2, C and game physics. 
@@ -40,6 +39,18 @@ changing gravity in the window, and elasticity factor in the window)
 ### AFTER
 <img width="1919" height="975" alt="after" src="https://github.com/user-attachments/assets/b2d5cd91-985d-4778-ad8c-108e6152422f" />
 Using valgrind and callgrind, I found what was eating away at the peformance of the simualtor. It was a rendering issue, where I would render every particle at every frame. The fix was simply having a pre-rendered texture and adding it onto the particle coordinates.
+
+if you want to run valgrind and call grind for yourself use these commands:
+```bash
+ valgrind --tool=callgrind --instr-atstart=no ./output
+
+# then after particles are bouncing for a bit or are settled
+kcachegrind callgrind.out.*
+```
+
+
+
+
 
 ## Resources
 https://www.youtube.com/watch?v=LyGKycYT2v0
