@@ -4,6 +4,8 @@
 #include "Constants.h"
 #include "FpsText.h"
 #include <time.h>
+#include <valgrind/callgrind.h>
+
 
 int gRunning = IS_RUNNING ;
 int randHelp(int lb, int ub)
@@ -52,6 +54,8 @@ void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle *particle[], 
             DrawParticle(renderer, particle[i]);
         }
 
+        // PROFILER END
+        CALLGRIND_STOP_INSTRUMENTATION;
         SDL_RenderPresent(renderer);
 
         // FPS calculation
@@ -84,8 +88,11 @@ int main()
 {
     Particle *particle[MAX_PARTICLE];
     srand(time(NULL));
+    // profiler START
+    CALLGRIND_START_INSTRUMENTATION;
     for(int i = 0; i < MAX_PARTICLE; i++)
     {
+
         // Allocate memory for the Particle struct
         particle[i] = malloc(sizeof(Particle));
         

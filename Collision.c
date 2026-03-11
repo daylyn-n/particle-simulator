@@ -151,95 +151,116 @@ void DrawParticleColor(Particle *p1, Particle* p2)
 {
     *p1->collideColor = (SDL_Color){255, 80, 80, 255};
     *p2->collideColor = (SDL_Color){255, 80, 80, 255};
-    
 }
 
-// Helper to get primary quadrant for a particle (the quadrant its center is in)
-static inline int getPrimaryQuadrant(Particle *p, float halfWidth, float halfHeight)
+// Static grid storage - allocated once, reused every frame
+static int *gridCells = NULL;      // For each cell: linked list head (particle index, -1 = empty)
+static int *particleNext = NULL;   // For each particle: next particle in same cell (-1 = end)
+static int *particleCell = NULL;   // For each particle: which cell it belongs to
+
+static void initGrid(void)
 {
-    int qx = (*p->x >= halfWidth) ? 1 : 0;
-    int qy = (*p->y >= halfHeight) ? 1 : 0;
-    return qy * 2 + qx;
+    if (gridCells == NULL)
+    {
+        gridCells = malloc(NUM_CELLS * sizeof(int));
+        particleNext = malloc(MAX_PARTICLE * sizeof(int));
+        particleCell = malloc(MAX_PARTICLE * sizeof(int));
+    }
+}
+
+static inline int getCellIndex(float x, float y)
+{
+    int col = (int)(x / CELL_SIZE);
+    int row = (int)(y / CELL_SIZE);
+    
+    // Clamp to valid range
+    if (col < 0) col = 0;
+    if (col >= GRID_COLS) col = GRID_COLS - 1;
+    if (row < 0) row = 0;
+    if (row >= GRID_ROWS) row = GRID_ROWS - 1;
+    
+    return row * GRID_COLS + col;
 }
 
 void CollideAllParticle(SDL_Renderer* renderer, Particle *particle[])
 {
-    // Use dynamic allocation for large particle counts
-    int **quadrantParticles = malloc(NUM_QUADRANTS * sizeof(int*));
-    int *quadrantCounts = calloc(NUM_QUADRANTS, sizeof(int));
+    initGrid();
     
-    for (int q = 0; q < NUM_QUADRANTS; q++)
+    // Clear grid - set all cells to empty (-1)
+    for (int i = 0; i < NUM_CELLS; i++)
+        gridCells[i] = -1;
+    
+    // Phase 1: Insert all particles into grid (O(n))
+    for (int i = 0; i < MAX_PARTICLE; i++)
     {
-        quadrantParticles[q] = malloc(MAX_PARTICLE * sizeof(int));
+        int cell = getCellIndex(*particle[i]->x, *particle[i]->y);
+        particleCell[i] = cell;
+        
+        // Insert at head of linked list for this cell
+        particleNext[i] = gridCells[cell];
+        gridCells[cell] = i;
     }
     
-    float halfWidth = (float)WIDTH / 2.0f;
-    float halfHeight = (float)HEIGHT / 2.0f;
-    
-    // Phase 1: Distribute particles into quadrants
-    // Particles near boundaries are added to multiple quadrants
+    // Phase 2: Check collisions
+    // For each particle, check against particles in same cell and 4 neighboring cells
+    // (right, bottom-left, bottom, bottom-right) to avoid duplicate checks
     for (int i = 0; i < MAX_PARTICLE; i++)
     {
         float x = *particle[i]->x;
         float y = *particle[i]->y;
-        float r = *particle[i]->r;
+        int col = (int)(x / CELL_SIZE);
+        int row = (int)(y / CELL_SIZE);
         
-        bool inLeft = (x - r < halfWidth);
-        bool inRight = (x + r >= halfWidth);
-        bool inTop = (y - r < halfHeight);
-        bool inBottom = (y + r >= halfHeight);
+        // Clamp
+        if (col < 0) col = 0;
+        if (col >= GRID_COLS) col = GRID_COLS - 1;
+        if (row < 0) row = 0;
+        if (row >= GRID_ROWS) row = GRID_ROWS - 1;
         
-        if (inLeft && inTop)
-            quadrantParticles[0][quadrantCounts[0]++] = i;
-        if (inRight && inTop)
-            quadrantParticles[1][quadrantCounts[1]++] = i;
-        if (inLeft && inBottom)
-            quadrantParticles[2][quadrantCounts[2]++] = i;
-        if (inRight && inBottom)
-            quadrantParticles[3][quadrantCounts[3]++] = i;
-    }
-    
-    // Phase 2: Check collisions within each quadrant
-    // To avoid duplicate checks, only process a pair in the lowest quadrant
-    // where BOTH particles' centers reside
-    for (int q = 0; q < NUM_QUADRANTS; q++)
-    {
-        for (int i = 0; i < quadrantCounts[q]; i++)
+        // Check same cell - only particles after this one in the list
+        int j = particleNext[i];
+        while (j != -1)
         {
-            for (int j = i + 1; j < quadrantCounts[q]; j++)
+            if (ParticlesCollide(renderer, particle[i], particle[j]))
             {
-                int idx1 = quadrantParticles[q][i];
-                int idx2 = quadrantParticles[q][j];
-                
-                // Get primary quadrant for each particle (where their center is)
-                int q1 = getPrimaryQuadrant(particle[idx1], halfWidth, halfHeight);
-                int q2 = getPrimaryQuadrant(particle[idx2], halfWidth, halfHeight);
-                
-                // Only process this pair if current quadrant is the minimum of their primary quadrants
-                // This ensures each pair is checked exactly once
-                int minQ = (q1 < q2) ? q1 : q2;
-                if (q != minQ)
-                    continue;
-                
-                if (ParticlesCollide(renderer, particle[idx1], particle[idx2]))
-                { 
-                    ResolveCollision(particle[idx1], particle[idx2]);
-                    DrawParticleColor(particle[idx1], particle[idx2]);
+                ResolveCollision(particle[i], particle[j]);
+                DrawParticleColor(particle[i], particle[j]);
+                SDL_SetRenderDrawColor(renderer,
+                    particle[i]->collideColor->r,
+                    particle[i]->collideColor->g,
+                    particle[i]->collideColor->b, 255);
+            }
+            j = particleNext[j];
+        }
+        
+        // Check neighboring cells (only right and bottom neighbors to avoid duplicates)
+        // Neighbors: right (col+1, row), bottom-left (col-1, row+1), bottom (col, row+1), bottom-right (col+1, row+1)
+        int neighbors[4][2] = {{1, 0}, {-1, 1}, {0, 1}, {1, 1}};
+        
+        for (int n = 0; n < 4; n++)
+        {
+            int ncol = col + neighbors[n][0];
+            int nrow = row + neighbors[n][1];
+            
+            if (ncol < 0 || ncol >= GRID_COLS || nrow < 0 || nrow >= GRID_ROWS)
+                continue;
+            
+            int neighborCell = nrow * GRID_COLS + ncol;
+            j = gridCells[neighborCell];
+            
+            while (j != -1)
+            {
+                if (ParticlesCollide(renderer, particle[i], particle[j]))
+                {
+                    ResolveCollision(particle[i], particle[j]);
+                    DrawParticleColor(particle[i], particle[j]);
                     SDL_SetRenderDrawColor(renderer,
-                                        particle[idx1]->collideColor->r,
-                                        particle[idx1]->collideColor->g,
-                                        particle[idx1]->collideColor->b,
-                                        255);
+                        particle[i]->collideColor->r,
+                        particle[i]->collideColor->g,
+                        particle[i]->collideColor->b, 255);
                 }
+                j = particleNext[j];
             }
         }
     }
-    
-    // Cleanup
-    for (int q = 0; q < NUM_QUADRANTS; q++)
-    {
-        free(quadrantParticles[q]);
-    }
-    free(quadrantParticles);
-    free(quadrantCounts);
 }
