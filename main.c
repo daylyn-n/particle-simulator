@@ -26,7 +26,8 @@ SDL_Texture *CreateCircleTexture(SDL_Renderer* renderer, int radius)
     SDL_SetRenderDrawColor(renderer, 0,0,0,0);
 
     SDL_RenderClear(renderer);
-
+    
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     int cx = radius, cy = radius;
     for (int y = -radius; y <= radius; y++) {
         int dx = (int)floor(sqrt((double)(radius * radius - y * y)));
@@ -34,7 +35,7 @@ SDL_Texture *CreateCircleTexture(SDL_Renderer* renderer, int radius)
                 cx - dx, cy + y,
                 cx + dx, cy + y);
     }
-    SDL_SetRenderTarget(renderer, tex);
+    SDL_SetRenderTarget(renderer, NULL);
     return tex;
 
 }
