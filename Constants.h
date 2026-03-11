@@ -3,7 +3,7 @@
  
 #define WIDTH 1000
 #define HEIGHT 800
-#define MAX_PARTICLE 500
+#define MAX_PARTICLE 5000
 #define GRAVITY 9.8
 #define FRICTION 0.1
 

@@ -12,6 +12,32 @@ int randHelp(int lb, int ub)
 {
     return (rand() % (ub - lb + 1)) + 1;
 }
+SDL_Texture *CreateCircleTexture(SDL_Renderer* renderer, int radius)
+{
+
+    int size = radius * 2;
+    
+    SDL_Texture *tex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, size, size);
+
+    SDL_SetTextureBlendMode(tex, SDL_BLENDMODE_BLEND);
+
+    SDL_SetRenderTarget(renderer, tex);
+
+    SDL_SetRenderDrawColor(renderer, 0,0,0,0);
+
+    SDL_RenderClear(renderer);
+
+    int cx = radius, cy = radius;
+    for (int y = -radius; y <= radius; y++) {
+        int dx = (int)floor(sqrt((double)(radius * radius - y * y)));
+        SDL_RenderDrawLine(renderer,
+                cx - dx, cy + y,
+                cx + dx, cy + y);
+    }
+    SDL_SetRenderTarget(renderer, tex);
+    return tex;
+
+}
 
 void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle *particle[], float deltaTime, FpsText ft)
 {
@@ -23,6 +49,7 @@ void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle *particle[], 
     Uint32 fps = 0;
     Uint32 fpsTimer = SDL_GetTicks();
     FpsTextInit(&ft, renderer);
+    SDL_Texture *circleTex = CreateCircleTexture(renderer, *particle[0]->r);
     
     while(!gRunning)
     {
@@ -51,7 +78,13 @@ void MainLoop(SDL_Window *window, SDL_Renderer *renderer, Particle *particle[], 
         CollideAllParticle(renderer, particle);
         for(int i = 0; i < MAX_PARTICLE; i++)
         {
-            DrawParticle(renderer, particle[i]);
+            SDL_Rect dest = {
+                (int)*particle[i]->x - *particle[i]->r,
+                (int)*particle[i]->y - *particle[i]->r,
+                *particle[i]->r * 2, 
+                *particle[i]->r * 2
+            }; 
+            SDL_RenderCopy(renderer, circleTex, NULL, &dest);
         }
 
         // PROFILER END
