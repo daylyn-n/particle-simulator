@@ -7,6 +7,10 @@ be a good opportunity to learn it
  
 ## demo and fps check
 
+
+https://github.com/user-attachments/assets/fc020dff-923c-4af6-afb6-688457cae28b
+
+### first iteration
 https://github.com/user-attachments/assets/b0d30bf6-c61e-4518-9005-b5edf6298171
 
 
