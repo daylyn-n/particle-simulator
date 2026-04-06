@@ -130,6 +130,174 @@ renderer/fast:
 	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/build
 .PHONY : renderer/fast
 
+__/imgui/backends/imgui_impl_sdl2.o: __/imgui/backends/imgui_impl_sdl2.cpp.o
+.PHONY : __/imgui/backends/imgui_impl_sdl2.o
+
+# target to build an object file
+__/imgui/backends/imgui_impl_sdl2.cpp.o:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/backends/imgui_impl_sdl2.cpp.o
+.PHONY : __/imgui/backends/imgui_impl_sdl2.cpp.o
+
+__/imgui/backends/imgui_impl_sdl2.i: __/imgui/backends/imgui_impl_sdl2.cpp.i
+.PHONY : __/imgui/backends/imgui_impl_sdl2.i
+
+# target to preprocess a source file
+__/imgui/backends/imgui_impl_sdl2.cpp.i:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/backends/imgui_impl_sdl2.cpp.i
+.PHONY : __/imgui/backends/imgui_impl_sdl2.cpp.i
+
+__/imgui/backends/imgui_impl_sdl2.s: __/imgui/backends/imgui_impl_sdl2.cpp.s
+.PHONY : __/imgui/backends/imgui_impl_sdl2.s
+
+# target to generate assembly for a file
+__/imgui/backends/imgui_impl_sdl2.cpp.s:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/backends/imgui_impl_sdl2.cpp.s
+.PHONY : __/imgui/backends/imgui_impl_sdl2.cpp.s
+
+__/imgui/backends/imgui_impl_sdlrenderer2.o: __/imgui/backends/imgui_impl_sdlrenderer2.cpp.o
+.PHONY : __/imgui/backends/imgui_impl_sdlrenderer2.o
+
+# target to build an object file
+__/imgui/backends/imgui_impl_sdlrenderer2.cpp.o:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/backends/imgui_impl_sdlrenderer2.cpp.o
+.PHONY : __/imgui/backends/imgui_impl_sdlrenderer2.cpp.o
+
+__/imgui/backends/imgui_impl_sdlrenderer2.i: __/imgui/backends/imgui_impl_sdlrenderer2.cpp.i
+.PHONY : __/imgui/backends/imgui_impl_sdlrenderer2.i
+
+# target to preprocess a source file
+__/imgui/backends/imgui_impl_sdlrenderer2.cpp.i:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/backends/imgui_impl_sdlrenderer2.cpp.i
+.PHONY : __/imgui/backends/imgui_impl_sdlrenderer2.cpp.i
+
+__/imgui/backends/imgui_impl_sdlrenderer2.s: __/imgui/backends/imgui_impl_sdlrenderer2.cpp.s
+.PHONY : __/imgui/backends/imgui_impl_sdlrenderer2.s
+
+# target to generate assembly for a file
+__/imgui/backends/imgui_impl_sdlrenderer2.cpp.s:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/backends/imgui_impl_sdlrenderer2.cpp.s
+.PHONY : __/imgui/backends/imgui_impl_sdlrenderer2.cpp.s
+
+__/imgui/imgui.o: __/imgui/imgui.cpp.o
+.PHONY : __/imgui/imgui.o
+
+# target to build an object file
+__/imgui/imgui.cpp.o:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui.cpp.o
+.PHONY : __/imgui/imgui.cpp.o
+
+__/imgui/imgui.i: __/imgui/imgui.cpp.i
+.PHONY : __/imgui/imgui.i
+
+# target to preprocess a source file
+__/imgui/imgui.cpp.i:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui.cpp.i
+.PHONY : __/imgui/imgui.cpp.i
+
+__/imgui/imgui.s: __/imgui/imgui.cpp.s
+.PHONY : __/imgui/imgui.s
+
+# target to generate assembly for a file
+__/imgui/imgui.cpp.s:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui.cpp.s
+.PHONY : __/imgui/imgui.cpp.s
+
+__/imgui/imgui_draw.o: __/imgui/imgui_draw.cpp.o
+.PHONY : __/imgui/imgui_draw.o
+
+# target to build an object file
+__/imgui/imgui_draw.cpp.o:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui_draw.cpp.o
+.PHONY : __/imgui/imgui_draw.cpp.o
+
+__/imgui/imgui_draw.i: __/imgui/imgui_draw.cpp.i
+.PHONY : __/imgui/imgui_draw.i
+
+# target to preprocess a source file
+__/imgui/imgui_draw.cpp.i:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui_draw.cpp.i
+.PHONY : __/imgui/imgui_draw.cpp.i
+
+__/imgui/imgui_draw.s: __/imgui/imgui_draw.cpp.s
+.PHONY : __/imgui/imgui_draw.s
+
+# target to generate assembly for a file
+__/imgui/imgui_draw.cpp.s:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui_draw.cpp.s
+.PHONY : __/imgui/imgui_draw.cpp.s
+
+__/imgui/imgui_tables.o: __/imgui/imgui_tables.cpp.o
+.PHONY : __/imgui/imgui_tables.o
+
+# target to build an object file
+__/imgui/imgui_tables.cpp.o:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui_tables.cpp.o
+.PHONY : __/imgui/imgui_tables.cpp.o
+
+__/imgui/imgui_tables.i: __/imgui/imgui_tables.cpp.i
+.PHONY : __/imgui/imgui_tables.i
+
+# target to preprocess a source file
+__/imgui/imgui_tables.cpp.i:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui_tables.cpp.i
+.PHONY : __/imgui/imgui_tables.cpp.i
+
+__/imgui/imgui_tables.s: __/imgui/imgui_tables.cpp.s
+.PHONY : __/imgui/imgui_tables.s
+
+# target to generate assembly for a file
+__/imgui/imgui_tables.cpp.s:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui_tables.cpp.s
+.PHONY : __/imgui/imgui_tables.cpp.s
+
+__/imgui/imgui_widgets.o: __/imgui/imgui_widgets.cpp.o
+.PHONY : __/imgui/imgui_widgets.o
+
+# target to build an object file
+__/imgui/imgui_widgets.cpp.o:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui_widgets.cpp.o
+.PHONY : __/imgui/imgui_widgets.cpp.o
+
+__/imgui/imgui_widgets.i: __/imgui/imgui_widgets.cpp.i
+.PHONY : __/imgui/imgui_widgets.i
+
+# target to preprocess a source file
+__/imgui/imgui_widgets.cpp.i:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui_widgets.cpp.i
+.PHONY : __/imgui/imgui_widgets.cpp.i
+
+__/imgui/imgui_widgets.s: __/imgui/imgui_widgets.cpp.s
+.PHONY : __/imgui/imgui_widgets.s
+
+# target to generate assembly for a file
+__/imgui/imgui_widgets.cpp.s:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/__/imgui/imgui_widgets.cpp.s
+.PHONY : __/imgui/imgui_widgets.cpp.s
+
+gui.o: gui.cpp.o
+.PHONY : gui.o
+
+# target to build an object file
+gui.cpp.o:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/gui.cpp.o
+.PHONY : gui.cpp.o
+
+gui.i: gui.cpp.i
+.PHONY : gui.i
+
+# target to preprocess a source file
+gui.cpp.i:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/gui.cpp.i
+.PHONY : gui.cpp.i
+
+gui.s: gui.cpp.s
+.PHONY : gui.s
+
+# target to generate assembly for a file
+gui.cpp.s:
+	cd /mnt/c/Users/dayly/cotin/projects/particle-simulator/build && $(MAKE) $(MAKESILENT) -f renderer/CMakeFiles/renderer.dir/build.make renderer/CMakeFiles/renderer.dir/gui.cpp.s
+.PHONY : gui.cpp.s
+
 renderer.o: renderer.c.o
 .PHONY : renderer.o
 
@@ -163,6 +331,27 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... renderer"
+	@echo "... __/imgui/backends/imgui_impl_sdl2.o"
+	@echo "... __/imgui/backends/imgui_impl_sdl2.i"
+	@echo "... __/imgui/backends/imgui_impl_sdl2.s"
+	@echo "... __/imgui/backends/imgui_impl_sdlrenderer2.o"
+	@echo "... __/imgui/backends/imgui_impl_sdlrenderer2.i"
+	@echo "... __/imgui/backends/imgui_impl_sdlrenderer2.s"
+	@echo "... __/imgui/imgui.o"
+	@echo "... __/imgui/imgui.i"
+	@echo "... __/imgui/imgui.s"
+	@echo "... __/imgui/imgui_draw.o"
+	@echo "... __/imgui/imgui_draw.i"
+	@echo "... __/imgui/imgui_draw.s"
+	@echo "... __/imgui/imgui_tables.o"
+	@echo "... __/imgui/imgui_tables.i"
+	@echo "... __/imgui/imgui_tables.s"
+	@echo "... __/imgui/imgui_widgets.o"
+	@echo "... __/imgui/imgui_widgets.i"
+	@echo "... __/imgui/imgui_widgets.s"
+	@echo "... gui.o"
+	@echo "... gui.i"
+	@echo "... gui.s"
 	@echo "... renderer.o"
 	@echo "... renderer.i"
 	@echo "... renderer.s"

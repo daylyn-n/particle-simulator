@@ -21,5 +21,7 @@ void EngineStep(float dt);
 Particle **EngineGetParticles(void);
 int EngineGetParticleCount(void);
 void EngineCleanup(void);
+void EngineReset(int particleCount);
+void EngineSetElasticity(float e);
 
 #endif

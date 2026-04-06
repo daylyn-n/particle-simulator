@@ -1,20 +1,21 @@
 #include "renderer.h"
+#include "gui.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <math.h>
 
-static SDL_Window *window = NULL;
+static SDL_Window   *window       = NULL;
 static SDL_Renderer *sdl_renderer = NULL;
-static SDL_Texture *circleTex = NULL;
+static SDL_Texture  *circleTex    = NULL;
 
 /* FPS text state */
-static TTF_Font *fpsFont = NULL;
-static SDL_Color fpsColor = {40, 255, 40, 255};
-static SDL_Rect fpsTextBox = {10, 10, 0, 0};
-static Uint32 fpsFrames = 0;
-static Uint32 fps = 0;
-static Uint32 fpsTimer = 0;
+static TTF_Font   *fpsFont    = NULL;
+static SDL_Color   fpsColor   = {40, 255, 40, 255};
+static SDL_Rect    fpsTextBox = {10, 10, 0, 0};
+static Uint32      fpsFrames  = 0;
+static Uint32      fps        = 0;
+static Uint32      fpsTimer   = 0;
 
 static const int FRAME_DELAY = 1000 / 60;
 
@@ -29,7 +30,7 @@ static SDL_Texture *CreateCircleTexture(int radius)
     SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 0);
     SDL_RenderClear(sdl_renderer);
 
-    SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(sdl_renderer, 255, 123, 41, 255);
     int cx = radius, cy = radius;
     for (int y = -radius; y <= radius; y++)
     {
@@ -42,6 +43,7 @@ static SDL_Texture *CreateCircleTexture(int radius)
 
 static void DrawFpsText(void)
 {
+    if (!fpsFont) return;
     char msg[64];
     snprintf(msg, sizeof(msg), "FPS: %u", fps);
     SDL_Surface *surfaceMessage = TTF_RenderText_Solid(fpsFont, msg, fpsColor);
@@ -53,7 +55,7 @@ static void DrawFpsText(void)
     SDL_DestroyTexture(tex);
 }
 
-int RendererInit(void)
+int RendererInit(int initial_particle_count, float initial_elasticity)
 {
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -67,10 +69,12 @@ int RendererInit(void)
                               SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
     sdl_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    fpsFont = TTF_OpenFont("BitcountSingle-Regular.ttf", 24);
+    fpsFont  = TTF_OpenFont("BitcountSingle-Regular.ttf", 24);
     fpsTimer = SDL_GetTicks();
 
     circleTex = CreateCircleTexture(PARTICLE_RADIUS);
+
+    GuiInit(window, sdl_renderer, initial_particle_count, initial_elasticity);
 
     return 0;
 }
@@ -80,6 +84,7 @@ int RendererPollEvents(void)
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0)
     {
+        GuiHandleEvent(&e);
         if (e.type == SDL_QUIT)
         {
             printf("End");
@@ -93,48 +98,69 @@ void RendererRender(Particle *particles[], int count)
 {
     Uint32 frameStart = SDL_GetTicks();
 
-    // clear screen
+    /* --- ImGui frame start --- */
+    GuiNewFrame();
+
+    /* clear screen */
     SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
     SDL_RenderClear(sdl_renderer);
 
-    // draw FPS
+    /* draw FPS */
     SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
     DrawFpsText();
 
-    // draw particles
+    /* draw particles */
     for (int i = 0; i < count; i++)
     {
         SDL_Rect dest = {
-            (int)*particles[i]->x - *particles[i]->r,
-            (int)*particles[i]->y - *particles[i]->r,
-            *particles[i]->r * 2,
-            *particles[i]->r * 2
+            (int)*particles[i]->x - (int)*particles[i]->r,
+            (int)*particles[i]->y - (int)*particles[i]->r,
+            (int)*particles[i]->r * 2,
+            (int)*particles[i]->r * 2
         };
         SDL_RenderCopy(sdl_renderer, circleTex, NULL, &dest);
     }
 
+    /* --- ImGui render --- */
+    GuiRender();
+
     SDL_RenderPresent(sdl_renderer);
 
-    // FPS calculation
+    /* FPS calculation */
     fpsFrames++;
     Uint32 now = SDL_GetTicks();
     if (now - fpsTimer >= 1000)
     {
-        fps = fpsFrames;
+        fps       = fpsFrames;
         fpsFrames = 0;
-        fpsTimer = now;
+        fpsTimer  = now;
     }
 
-    // cap frames
+    /* cap frames — not needed in Emscripten (browser controls timing) */
+#ifndef __EMSCRIPTEN__
     Uint32 frameTime = SDL_GetTicks() - frameStart;
     if (frameTime < FRAME_DELAY)
         SDL_Delay(FRAME_DELAY - frameTime);
+#else
+    (void)frameStart;
+#endif
+}
+
+RendererGuiState RendererGetGuiState(void)
+{
+    GuiState s = GuiGetState();
+    RendererGuiState rs;
+    rs.reset_requested = s.reset_requested;
+    rs.particle_count  = s.particle_count;
+    rs.elasticity      = s.elasticity;
+    return rs;
 }
 
 void RendererShutdown(void)
 {
+    GuiShutdown();
     if (circleTex) SDL_DestroyTexture(circleTex);
-    if (fpsFont) TTF_CloseFont(fpsFont);
+    if (fpsFont)   TTF_CloseFont(fpsFont);
     SDL_DestroyRenderer(sdl_renderer);
     SDL_DestroyWindow(window);
     TTF_Quit();

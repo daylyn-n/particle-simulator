@@ -5,6 +5,7 @@
 
 static Particle **particles = NULL;
 static int particle_count = 0;
+static float gCOR = 0.97f;
 
 static int randHelp(int lb, int ub)
 {
@@ -38,7 +39,7 @@ void EngineInit(int count)
         *particles[i]->vy          = randHelp(-20, 20);
         *particles[i]->r           = PARTICLE_RADIUS;
         *particles[i]->mass        = 80;
-        *particles[i]->baseColor   = (Color){255, 255, 255, 255};
+        *particles[i]->baseColor   = (Color){255, 123, 18, 255};
         *particles[i]->colorTime   = 2.0f;
     }
 }
@@ -283,6 +284,17 @@ void EngineStep(float dt)
         UpdateParticle(particles[i], dt);
     }
     CollideAllParticle();
+}
+
+void EngineReset(int particleCount)
+{
+    EngineCleanup();
+    EngineInit(particleCount);
+}
+
+void EngineSetElasticity(float e)
+{
+    gCOR = e;
 }
 
 void EngineCleanup(void)

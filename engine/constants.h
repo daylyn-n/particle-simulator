@@ -3,7 +3,7 @@
 
 #define WIDTH 1200
 #define HEIGHT 1000
-#define MAX_PARTICLE 1000
+#define MAX_PARTICLE 5000
 #define GRAVITY 9.8
 #define FRICTION 0.1
 #define PARTICLE_RADIUS 10
@@ -14,7 +14,6 @@
 #define GRID_COLS ((WIDTH + CELL_SIZE - 1) / CELL_SIZE)
 #define GRID_ROWS ((HEIGHT + CELL_SIZE - 1) / CELL_SIZE)
 #define NUM_CELLS (GRID_COLS * GRID_ROWS)
-// how elastic our particles are
-#define gCOR 0.97
+// gCOR is now a runtime variable in engine.c (was 0.97)
 
 #endif
