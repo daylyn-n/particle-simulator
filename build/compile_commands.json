@@ -1,0 +1,62 @@
+[
+{
+  "directory": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/engine",
+  "command": "/usr/bin/cc  -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine -std=gnu11 -o CMakeFiles/engine.dir/engine.c.o -c /mnt/c/Users/dayly/cotin/projects/particle-simulator/engine/engine.c",
+  "file": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine/engine.c",
+  "output": "engine/CMakeFiles/engine.dir/engine.c.o"
+},
+{
+  "directory": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer",
+  "command": "/usr/bin/cc  -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends -I/usr/include/SDL2 -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine -std=gnu11 -o CMakeFiles/renderer.dir/renderer.c.o -c /mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer/renderer.c",
+  "file": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer/renderer.c",
+  "output": "renderer/CMakeFiles/renderer.dir/renderer.c.o"
+},
+{
+  "directory": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer",
+  "command": "/usr/bin/c++  -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends -I/usr/include/SDL2 -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine -std=gnu++17 -o CMakeFiles/renderer.dir/gui.cpp.o -c /mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer/gui.cpp",
+  "file": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer/gui.cpp",
+  "output": "renderer/CMakeFiles/renderer.dir/gui.cpp.o"
+},
+{
+  "directory": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer",
+  "command": "/usr/bin/c++  -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends -I/usr/include/SDL2 -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine -std=gnu++17 -o CMakeFiles/renderer.dir/__/imgui/imgui.cpp.o -c /mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/imgui.cpp",
+  "file": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/imgui.cpp",
+  "output": "renderer/CMakeFiles/renderer.dir/__/imgui/imgui.cpp.o"
+},
+{
+  "directory": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer",
+  "command": "/usr/bin/c++  -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends -I/usr/include/SDL2 -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine -std=gnu++17 -o CMakeFiles/renderer.dir/__/imgui/imgui_draw.cpp.o -c /mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/imgui_draw.cpp",
+  "file": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/imgui_draw.cpp",
+  "output": "renderer/CMakeFiles/renderer.dir/__/imgui/imgui_draw.cpp.o"
+},
+{
+  "directory": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer",
+  "command": "/usr/bin/c++  -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends -I/usr/include/SDL2 -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine -std=gnu++17 -o CMakeFiles/renderer.dir/__/imgui/imgui_tables.cpp.o -c /mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/imgui_tables.cpp",
+  "file": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/imgui_tables.cpp",
+  "output": "renderer/CMakeFiles/renderer.dir/__/imgui/imgui_tables.cpp.o"
+},
+{
+  "directory": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer",
+  "command": "/usr/bin/c++  -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends -I/usr/include/SDL2 -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine -std=gnu++17 -o CMakeFiles/renderer.dir/__/imgui/imgui_widgets.cpp.o -c /mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/imgui_widgets.cpp",
+  "file": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/imgui_widgets.cpp",
+  "output": "renderer/CMakeFiles/renderer.dir/__/imgui/imgui_widgets.cpp.o"
+},
+{
+  "directory": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer",
+  "command": "/usr/bin/c++  -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends -I/usr/include/SDL2 -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine -std=gnu++17 -o CMakeFiles/renderer.dir/__/imgui/backends/imgui_impl_sdl2.cpp.o -c /mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends/imgui_impl_sdl2.cpp",
+  "file": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends/imgui_impl_sdl2.cpp",
+  "output": "renderer/CMakeFiles/renderer.dir/__/imgui/backends/imgui_impl_sdl2.cpp.o"
+},
+{
+  "directory": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer",
+  "command": "/usr/bin/c++  -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends -I/usr/include/SDL2 -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine -std=gnu++17 -o CMakeFiles/renderer.dir/__/imgui/backends/imgui_impl_sdlrenderer2.cpp.o -c /mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends/imgui_impl_sdlrenderer2.cpp",
+  "file": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/imgui/backends/imgui_impl_sdlrenderer2.cpp",
+  "output": "renderer/CMakeFiles/renderer.dir/__/imgui/backends/imgui_impl_sdlrenderer2.cpp.o"
+},
+{
+  "directory": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/app",
+  "command": "/usr/bin/cc  -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/engine -I/mnt/c/Users/dayly/cotin/projects/particle-simulator/renderer -std=gnu11 -o CMakeFiles/particle-simulator.dir/main.c.o -c /mnt/c/Users/dayly/cotin/projects/particle-simulator/app/main.c",
+  "file": "/mnt/c/Users/dayly/cotin/projects/particle-simulator/app/main.c",
+  "output": "app/CMakeFiles/particle-simulator.dir/main.c.o"
+}
+]

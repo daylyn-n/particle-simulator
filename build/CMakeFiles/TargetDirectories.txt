@@ -1,0 +1,11 @@
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/engine/CMakeFiles/engine.dir
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/engine/CMakeFiles/edit_cache.dir
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/engine/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer/CMakeFiles/renderer.dir
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer/CMakeFiles/edit_cache.dir
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/renderer/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/app/CMakeFiles/particle-simulator.dir
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/app/CMakeFiles/edit_cache.dir
+/mnt/c/Users/dayly/cotin/projects/particle-simulator/build/app/CMakeFiles/rebuild_cache.dir

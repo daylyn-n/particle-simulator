@@ -1,0 +1,1 @@
+/usr/bin/c++ "CMakeFiles/particle-simulator.dir/main.c.o" -o particle-simulator  ../engine/libengine.a ../renderer/librenderer.a ../engine/libengine.a -lSDL2 -lSDL2_ttf -lSDL2 -lSDL2_ttf -lm 
